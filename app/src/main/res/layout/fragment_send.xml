@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ash"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/cameraIV"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:paddingTop="60dp"
+        android:src="@drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/cameraTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="4dp"
+        android:singleLine="true"
+        android:textSize="24sp"
+        android:text="Send your opinion"
+        android:textColor="#424242" />
+
+</LinearLayout>

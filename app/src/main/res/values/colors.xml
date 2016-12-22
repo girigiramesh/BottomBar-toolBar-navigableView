@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="appBackground">#ffffff</color>
     <color name="ash">#cdcdcd</color>
-
+    <color name="appColor">#8ec549</color>
+    <color name="appColorDark">#558B2F</color>
+    <color name="deselectedFont">#424242</color>
 </resources>
