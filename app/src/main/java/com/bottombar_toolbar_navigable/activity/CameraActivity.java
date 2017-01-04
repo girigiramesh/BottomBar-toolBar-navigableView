@@ -1,15 +1,16 @@
-package com.bottombar_toolbar_navigable;
+package com.bottombar_toolbar_navigable.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import com.bottombar_toolbar_navigable.R;
 
 /**
  * Created by Ramesh on 12/21/16.
  */
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends BaseActivity {
 
     public static void start(Context context) {
         Intent starter = new Intent(context, CameraActivity.class);

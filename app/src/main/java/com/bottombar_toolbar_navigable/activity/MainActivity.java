@@ -1,5 +1,7 @@
-package com.bottombar_toolbar_navigable;
+package com.bottombar_toolbar_navigable.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -7,18 +9,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bottombar_toolbar_navigable.R;
 import com.bottombar_toolbar_navigable.fragment.CameraFragment;
 import com.bottombar_toolbar_navigable.fragment.FragmentGallery;
 import com.bottombar_toolbar_navigable.fragment.SendFragment;
@@ -26,12 +26,17 @@ import com.bottombar_toolbar_navigable.fragment.SlideFragment;
 
 import static com.bottombar_toolbar_navigable.R.menu.main;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    private static final String TAG = "MainActivity";
     private ImageView cameraIV, galleryIV, slideIV, sendIV;
     private TextView cameraTV, galleryTV, slideTV, sendTV;
     private LinearLayout cameraRL, galleryRL, slideRL, sendRL;
     private FrameLayout content_frame;
-    View mainView;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         slideRL.setOnClickListener(this);
         sendRL = (LinearLayout) findViewById(R.id.sendRL);
         sendRL.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        switch (view.getId()) {
+            case R.id.cameraRL:
+                deselectAll();
+                cameraTV.setTextColor(getResources().getColor(R.color.appColor));
+                cameraIV.setImageResource(R.drawable.ic_menu_camera);
+                CameraFragment cameraFragment = new CameraFragment();
+                fragmentTransaction.add(R.id.content_frame, cameraFragment, "cameraFragment");
+                break;
+            case R.id.galleryRL:
+                deselectAll();
+                galleryTV.setTextColor(getResources().getColor(R.color.appColor));
+                galleryIV.setImageResource(R.drawable.ic_menu_gallery);
+                FragmentGallery fragmentGallery = new FragmentGallery();
+                fragmentTransaction.replace(R.id.content_frame, fragmentGallery, "FragmentGallery");
+                break;
+            case R.id.slideRL:
+                deselectAll();
+                slideTV.setTextColor(getResources().getColor(R.color.appColor));
+                slideIV.setImageResource(R.drawable.ic_menu_slideshow);
+                SlideFragment slideFragment = new SlideFragment();
+                fragmentTransaction.replace(R.id.content_frame, slideFragment, "SlideFragment");
+                break;
+            case R.id.sendRL:
+                deselectAll();
+                sendTV.setTextColor(getResources().getColor(R.color.appColor));
+                sendIV.setImageResource(R.drawable.ic_menu_send);
+                SendFragment sendFragment = new SendFragment();
+                fragmentTransaction.replace(R.id.content_frame, sendFragment, "SendFragment");
+                break;
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -127,29 +169,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        switch (id) {
-            case R.id.cameraRL:
-                CameraFragment cameraFragment = new CameraFragment();
-                fragmentTransaction.add(R.id.content_frame, cameraFragment, "cameraFragment");
-                break;
-            case R.id.galleryRL:
-                FragmentGallery fragmentGallery = new FragmentGallery();
-                fragmentTransaction.replace(R.id.content_frame, fragmentGallery, "FragmentGallery");
-                break;
-            case R.id.slideRL:
-                SlideFragment slideFragment = new SlideFragment();
-                fragmentTransaction.replace(R.id.content_frame, slideFragment, "SlideFragment");
-                break;
-            case R.id.sendRL:
-                SendFragment sendFragment = new SendFragment();
-                fragmentTransaction.replace(R.id.content_frame, sendFragment, "SendFragment");
-                break;
-        }
-        fragmentTransaction.commitAllowingStateLoss();
+
+    public void deselectAll() {
+
+        cameraTV.setTextColor(getResources().getColor(R.color.deselectedFont));
+        galleryTV.setTextColor(getResources().getColor(R.color.deselectedFont));
+        slideTV.setTextColor(getResources().getColor(R.color.deselectedFont));
+        sendTV.setTextColor(getResources().getColor(R.color.deselectedFont));
+
+        cameraIV.setImageResource(R.drawable.ic_menu_camera);
+        galleryIV.setImageResource(R.drawable.ic_menu_gallery);
+        slideIV.setImageResource(R.drawable.ic_menu_slideshow);
+        sendIV.setImageResource(R.drawable.ic_menu_send);
     }
 }
